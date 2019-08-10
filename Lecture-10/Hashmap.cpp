@@ -116,6 +116,16 @@ public:
 
 	}
 
+	int count(string key){
+		node<T>* temp=search(key);
+		if(temp==NULL){
+			return 0;
+		}
+		else{
+			return 1;
+		}
+	}
+
 	void Delete(string key){
 		int i=hashFn(key);
 		node<T>* temp = Bucket[i];

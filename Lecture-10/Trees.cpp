@@ -1,24 +1,52 @@
+// BinaryTrees
 #include <iostream>
+#include <queue>
+#include <climits>
+#include <cmath>
 using namespace std;
+
 class node{
-public:
+public:	
 	int data;
 	node* left;
 	node* right;
-	node(int d):data(d),left(NULL),right(NULL){}
+
+	node(int d){
+		data = d;
+		left = right = NULL;
+	}
 };
 
-node* ArrayToBST(int *arr,int s,int e){
-	if(s>e){
-		return NULL;
+node* InsertInBST(node* root,int data){
+	if(root == NULL){
+		root = new node(data);
+		return root;
 	}
 
-	int mid = (s+e)/2;
-	node* root = new node(arr[mid]);
-	root->left = ArrayToBST(arr,s,mid-1);
-	root->right = ArrayToBST(arr,mid+1,e);
+	if(data<=root->data){
+		root->left=InsertInBST(root->left,data);
+	}
+	else{
+		root->right=InsertInBST(root->right,data);
+	}
 	return root;
 }
+
+
+node* BuildTree(){
+	node* root=NULL;
+
+	int data;
+	cin>>data;
+
+	while(data!=-1){
+		root = InsertInBST(root,data);
+
+		cin>>data;
+	}
+	return root;
+}
+
 
 void LevelOrderPrint(node* root){
 	queue<node*> q;
@@ -46,12 +74,52 @@ void LevelOrderPrint(node* root){
 	}
 }
 
+void FindDistance(node* root,int &min_hd,int &max_hd,int hd){
+	if(root == NULL){
+		return;
+	}
+
+	if(hd>max_hd){
+		max_hd = hd;
+	}
+	if(hd<min_hd){
+		min_hd = hd;
+	}
+	FindDistance(root->left,min_hd,max_hd,hd-1);
+	FindDistance(root->right,min_hd,max_hd,hd+1);
+}
+
+void Print(node* root,int i,int hd){
+	if(root == NULL){
+		return;
+	}
+	if(i==hd){
+		cout<<root->data<<" ";
+	}
+	Print(root->left,i,hd-1);
+	Print(root->right,i,hd+1);
+}
+
+void PrintVerticalOrder(node* root){
+	int min_hd = INT_MAX;
+	int max_hd = INT_MIN;
+
+	FindDistance(root,min_hd,max_hd,0);
+	// cout<<min_hd<<" "<<max_hd<<endl;
+	for(int i=min_hd;i<=max_hd;i++){
+		Print(root,i,0);
+		cout<<endl;
+	}
+
+}
+
 int main(){
 	node* root = NULL;
-	int arr[]={1,3,4,5,6,7,8,9,10,11,12,13};
-	int n = sizeof(arr)/sizeof(int);
 
-	root = ArrayToBST(arr,0,n-1);
+	root = BuildTree();
+	// LevelOrderPrint(root);
+
+	PrintVerticalOrder(root);
 
 	return 0;
 }

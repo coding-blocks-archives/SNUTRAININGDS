@@ -33,7 +33,6 @@ ostream& operator<<(ostream &os,Fruit f){
 	return os;
 }
 
-
 int main(){
 
 	map<string,Fruit> h;
@@ -42,11 +41,18 @@ int main(){
 	Fruit b(150,"Red","Round",60);
 	Fruit c(40,"Green","Oval",70);
 	// cout<<a<<b<<c;
+
+
 	
 	h.insert(make_pair("Mango",a));
 	h.insert(make_pair("Apple",b));
 	h.insert(make_pair("PineApple",c));
-
+	if(h.count("Tango")==1){
+		cout<<"Exists"<<endl;
+	}
+	else{
+		cout<<"Doest not Exists"<<endl;
+	}
 	for(auto node:h){
 		cout<<node.first<<endl<<node.second;
 	}
