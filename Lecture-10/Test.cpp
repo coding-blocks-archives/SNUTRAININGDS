@@ -4,10 +4,10 @@ using namespace std;
 template<typename T>
 class node{
 public:
-	T key;
-	int value;
+	string key;
+	T value;
 	node<T>* next;
-	node(T s,int v){
+	node(string s,T v){
 		key = s;
 		value=v;
 		next = NULL;
@@ -19,7 +19,7 @@ class hashmap{
 	int cs;
 	int ts;
 
-	int hashFn(T key){
+	int hashFn(string key){
 		int ans = 0;
 		int mul_factor = 1;
 		for(int i=0;key[i]!='\0';i++){
@@ -36,7 +36,6 @@ class hashmap{
 	void rehash(){
 		node<T> ** oldBucket = Bucket;
 		int oldts = ts;
-
 		Bucket = new node<T>*[2*ts];
 		cs = 0;
 		ts = 2*ts;
@@ -64,7 +63,7 @@ public:
 		}
 	}
 
-	void insert(T key,int value){
+	void insert(string key,T value){
 		int i = hashFn(key);
 		// i : hash_index 
 		node<T>* n = new node<T>(key,value);
@@ -89,16 +88,48 @@ public:
 			cout<<endl;
 		}
 	}
+
+	T* search(string key){
+		int i = hashFn(key);
+		node<T>* temp = Bucket[i];
+		while(temp){
+			if(temp->key == key){
+				return &(temp->value);
+			}
+		}
+		return NULL;
+	}
+
+	T& operator[](string key){
+		T* temp = search(key);
+		if(temp == NULL){
+			// This key does not exists
+			T garbage;
+			insert(key,garbage);
+			temp = search(key);
+			return *temp;
+		}
+		else{
+			// this key exists
+			return *temp;		
+		}
+
+	}
+
 };
 
 int main(){
-	hashmap<string> h;
+	hashmap<int> h;
 
 	h.insert("Apple",150);
 	h.insert("PineApple",50);
 	h.insert("Guava",30);
 	h.insert("Kiwi",40);
-	h.insert("Mango",100);
+	// h.insert("Mango",100);
+	h["Mango"] = 100;
+	cout<<h["Mango"]<<endl;
+	h["Mango"] = 150;
+	cout<<h["Mango"]<<endl;
 
 	h.Print();
 
