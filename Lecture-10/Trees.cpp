@@ -2,6 +2,7 @@
 #include <iostream>
 #include <queue>
 #include <unordered_map>
+#include <map>
 #include <climits>
 #include <cmath>
 using namespace std;
@@ -86,6 +87,7 @@ void FindDistance(node* root,int &min_hd,int &max_hd,int hd){
 	if(hd<min_hd){
 		min_hd = hd;
 	}
+
 	FindDistance(root->left,min_hd,max_hd,hd-1);
 	FindDistance(root->right,min_hd,max_hd,hd+1);
 }
@@ -107,8 +109,9 @@ void Print(node* root,int i,int hd){
 void PrintVerticalOrder(node* root){
 	int min_hd = INT_MAX;
 	int max_hd = INT_MIN;
-	unordered_map<int,bool> h;
+	
 	FindDistance(root,min_hd,max_hd,0);
+
 	// cout<<min_hd<<" "<<max_hd<<endl;
 	for(int i=min_hd;i<=max_hd;i++){
 		Print(root,i,0);
