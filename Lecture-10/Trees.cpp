@@ -1,6 +1,7 @@
 // BinaryTrees
 #include <iostream>
 #include <queue>
+#include <unordered_map>
 #include <climits>
 #include <cmath>
 using namespace std;
@@ -95,6 +96,9 @@ void Print(node* root,int i,int hd){
 	}
 	if(i==hd){
 		cout<<root->data<<" ";
+		// h[i] = true;
+		return;
+
 	}
 	Print(root->left,i,hd-1);
 	Print(root->right,i,hd+1);
@@ -103,14 +107,14 @@ void Print(node* root,int i,int hd){
 void PrintVerticalOrder(node* root){
 	int min_hd = INT_MAX;
 	int max_hd = INT_MIN;
-
+	unordered_map<int,bool> h;
 	FindDistance(root,min_hd,max_hd,0);
 	// cout<<min_hd<<" "<<max_hd<<endl;
 	for(int i=min_hd;i<=max_hd;i++){
 		Print(root,i,0);
-		cout<<endl;
+		// cout<<endl;
 	}
-
+	cout<<endl;
 }
 
 int main(){
