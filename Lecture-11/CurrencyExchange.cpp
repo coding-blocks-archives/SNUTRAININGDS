@@ -25,11 +25,10 @@ int MinCoins(int amount,int *coins,int n,int *arr){
 }
 
 int BottomUp(int amount,int* coins,int n){
-	int arr[10000];
+	int *arr=new int[amount+1]; 
 	for(int i=0;i<=amount;i++){
 		arr[i] = INT_MAX;
 	}
-
 	arr[0] = 0;
 	for(int rupay = 1;rupay<=amount;rupay++){
 		for(int i=0;i<n;i++){
@@ -38,7 +37,6 @@ int BottomUp(int amount,int* coins,int n){
 			}
 		}
 	}
-
 	for(int i=0;i<=amount;i++){
 		cout<<arr[i]<<" ";
 	}
@@ -57,10 +55,6 @@ int main(){
 	
 	cout<<MinCoins(amount,coins,n,arr)<<endl;
 	cout<<BottomUp(amount,coins,n)<<endl;
-
-
-
-
 
 
 
