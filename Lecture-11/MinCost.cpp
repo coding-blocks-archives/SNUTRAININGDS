@@ -30,6 +30,11 @@ int MinCost(int i,int j,int cost[][4],int dp[][10]){
 	}
 }
 
+
+
+
+
+
 int main(){
 	int cost[][4]={
 		{1,1,1,5},
